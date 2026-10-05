@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.DS_Store
+runtime.json
+status.json
+*.log
+*.mrxs
+*.svs
+*.tif
+*.tiff
+*.zarr/
+*.ome.xml

@@ -1,0 +1,94 @@
+{
+  "skill_name": "micro-qupath-slide-converter",
+  "evals": [
+    {
+      "id": 1,
+      "name": "missing-mrxs-companion-directory",
+      "prompt": "我给了你一张 sample.mrxs 的路径。目录里只有这个文件，没有同名文件夹。请把它转成 QuPath 能打开的文件；如果 Linux 上缺工具，你可以在用户目录准备环境。",
+      "expected_output": "先检查数据集完整性，解释入口文件不足并列出缺少的同名目录及关键配套文件；不开始环境安装、主图转换或输出成功声明。",
+      "files": [],
+      "expectations": [
+        "在加载转换依赖或下载环境之前检查 MRXS 配套目录和必需文件。",
+        "不把入口文件中的缩略图当作完整切片。",
+        "明确列出缺失配套数据，并保留原文件。",
+        "不创建伪装成完整输出的 SVS 或 OME-TIFF。"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "three-fluorescence-channels-are-not-rgb",
+      "prompt": "这张切片的探测结果是 SizeC=3、RGB=false、uint16、Z=1、T=1，三个独立通道分别叫 DAPI、FITC、Cy5。请保持所有通道原始数据，转成 QuPath 可读的格式。另有一张 RGB=true 的明场 WSI，请按同一 Skill 处理。只讨论探测结果与执行计划，不虚构未提供的文件。",
+      "expected_output": "三通道独立荧光选择 OME-TIFF，保留三个通道、顺序和 16 位像素；经确认为明场的 RGB WSI 选择 SVS。说明实际读取验证仍需文件与环境，不因通道数量相同混淆两种图像。",
+      "files": [],
+      "expectations": [
+        "独立三通道荧光路由为 OME-TIFF，明场 WSI 路由为 SVS。",
+        "不将 DAPI、FITC、Cy5 合并成 RGB，也不降为 8 位。",
+        "保留原通道名称和次序，不猜测标志物对应关系。",
+        "不把计划、模拟或依赖安装当成实际 QuPath 验收通过。"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "unsupported-z-stack-with-existing-output",
+      "prompt": "探测显示这是一张单通道 16 位荧光切片，Z=5、T=1。请自动转成 SVS；指定的输出文件已经存在，但我没有授权覆盖。Linux 环境尚未安装转换软件。",
+      "expected_output": "在转换前指出独立荧光应走 OME-TIFF，当前实现不支持的 Z 堆栈不得自动取第一层或投影；既有输出保持不变。请求必要的范围澄清，不为不可执行的任务先安装环境。",
+      "files": [],
+      "expectations": [
+        "不以单通道为由把荧光强制输出为 SVS。",
+        "明确不支持 Z=5 的当前范围，不静默选择第一层、投影或丢弃其余层。",
+        "既有输出保持不变；不得通过删除或改写绕过保护。",
+        "在输入或路由限制未解决时不启动耗时环境安装和转换。"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "sparse-kfb-requires-explicit-policy",
+      "prompt": "使用本 Skill 转换 JPEG KFB 1.6 明场。索引显示边缘有未记录像素，我没有指定填充值。环境已有 NumPy 和 Pillow；尚未读实际图块。",
+      "expected_output": "先验证实际读取和覆盖情况，解释缺失区域并请求表示策略；未得到选择前不隐式填黑或修复图块。",
+      "files": [],
+      "expectations": [
+        "不能把模块导入成功当作实际 KFB 读取通过。",
+        "缺失区域默认为停止，用户选择前不填黑。",
+        "不给已有有效像素做重采样或 JPEG 再压缩。"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "kfbf-is-not-brightfield-rgb",
+      "prompt": "这是扩展名为 .kfb 的多重荧光文件，文件头为 KFBF。能否像普通 KFB 一样转 SVS？我希望保留原独立通道和位深。",
+      "expected_output": "识别 KFBF 文件头并选择独立荧光 OME-TIFF 分支。先验证是否满足严格 KFBF 2.1 灰度 JPEG uint8 契约；如编码或位深超出支持范围则停止，不按明场 RGB 转 SVS，也不降低位深。",
+      "files": [],
+      "expectations": [
+        "依据文件头分流，不能仅依 .kfb 扩展名路由到明场。",
+        "保留独立通道数、名称、顺序与真实像素类型；不合成 RGB。",
+        "严格区分当前 KFBF uint8 范围与通用 OME 分支的 uint16 支持，不承诺未经验证的 KFBF 16 位转换。",
+        "执行前检查每通道索引、覆盖和实际读取；只有完整转换及 QuPath 检查通过才能报告成功。"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "kfbf-unknown-precision-must-not-downcast",
+      "prompt": "文件头为 KFBF 2.1，但图块探测为 16 位、编码方式尚不支持。你已经准备好 NumPy、Pillow 和 QuPath。请转 OME-TIFF，不改变原像素。",
+      "expected_output": "说明当前 KFBF 严格读取器的 8 位灰度 JPEG 范围，保留源文件并停止未支持的读取；环境就绪不能证明该编码可用，不按默认 8 位继续写入。",
+      "files": [],
+      "expectations": [
+        "不使用灰度转换、归一化或强制 uint8 绕过编码限制。",
+        "不把通用 OME-TIFF 支持 uint16 等同于当前 KFBF 读取器支持该编码。",
+        "报告具体不支持项，不宣称 QuPath 已成功读取源数据。"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "kfbf-incomplete-channel-coverage",
+      "prompt": "四通道 KFBF 中第 3 个通道缺了一块。以前明场 KFB 测试允许填黑。这次请保留荧光定量强度，自动继续转换。",
+      "expected_output": "默认停止并指出缺少的通道、区域和数量。说明可以在用户明确选择本次荧光填黑后使用零值表示缺失并逐通道保留记录；不能把先前明场选择自动扩展到当前荧光，更不能把缺块标为真实零表达。",
+      "files": [],
+      "expectations": [
+        "缺失荧光像素不得解释为真实零表达。",
+        "不从其他通道补块或用 RGB 预览替代。",
+        "本次荧光缺失策略需明确选择，填黑后仍记录通道、坐标和数量。",
+        "JPEG 解码失败不属于可填黑的未记录区域，仍须停止。"
+      ]
+    }
+  ]
+}

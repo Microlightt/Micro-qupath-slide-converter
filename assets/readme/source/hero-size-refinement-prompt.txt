@@ -1,0 +1,6 @@
+Make one precise compositing edit to this transparent illustration: reduce ONLY the two cats, retaining their exact seated body shapes, head/body proportions, face geometry, happy open mouth expressions, eyes, fur and tails. Do not redesign or redraw the cats.
+
+Uniformly scale the LEFT cat (including tail and tiny excitement strokes) to 68% of its current width AND height. Anchor its front paws at approximately x285,y837. The cat should now be around 335px tall, not 500px. Uniformly scale the RIGHT cat to 74% width AND height, anchor front paws around x1185,y880, now about 315px tall, not 425px.
+Keep natural seated cats from the input, two front paws grounded, original precise silhouettes. Never squash bodies or enlarge heads. This is proportional downscaling and repositioning only.
+
+ALL other pixels/objects must remain visually unchanged: huge tissue viewer window, blank title bar, specimen/inset, green arrow, glass slide, fluorescence sheets, two leaves and yellow dot, original positions and scales. Viewer is the focal object; small cats are companions at its lower corners. Clear transparent space should open above each smaller cat, with no residual old cat silhouette. No new drawing, extra text or props. Keep 1402x1122 canvas, clean true alpha and opaque white fur. Same micro-visual editorial ink.

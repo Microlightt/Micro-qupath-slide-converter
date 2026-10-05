@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="253" height="42" viewBox="0 0 253 42" role="img" aria-labelledby="title desc">
+<title id="title">tested reader: QuPath 0.6.0</title>
+<desc id="desc">静态项目信息徽章，不代表持续 CI 状态。</desc>
+
+<rect width="253" height="36" rx="8" fill="#FFFCF4"/><path d="M8 0h103v36H8a8 8 0 0 1 -8 -8V8a8 8 0 0 1 8 -8Z" fill="#262C27"/><text x="55.5" y="24" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" font-weight="500" fill="#FFFCF4" text-anchor="middle">tested reader</text><text x="182.0" y="24" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="15" font-weight="600" fill="#355F49" text-anchor="middle">QuPath 0.6.0</text>
+</svg>
